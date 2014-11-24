@@ -238,8 +238,8 @@ module VCloudCloud
         RestClient::Request.execute params do |response, request, result, &block|
           to_log = "REST RES #{response.code} #{response.headers.inspect} #{response.body}"
           @logger.debug to_log
-          p to_log
-          p "\n\n"
+          puts to_log
+          puts "\n\n"
           response.return! request, result, &block
         end
       end

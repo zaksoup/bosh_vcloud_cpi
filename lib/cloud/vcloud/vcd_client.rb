@@ -224,18 +224,25 @@ module VCloudCloud
               :content_type => '*/*'
           }
       }
-      p "The attempted path is #{params[:url]}"
+      p "Starting request to #{params[:url]}"
+      p "Method #{params[:method]}"
       params[:headers][:x_vcloud_authorization] = @auth_token if !options[:login] && @auth_token
       params[:cookies] = @cookie if !options[:login] && cookie_available?
       params[:payload] = options[:payload].to_s if options[:payload]
       params[:headers].merge! options[:headers] if options[:headers]
+      p "Headers #{params[:headers].inspect}"
       response = retry_for_network_issue do
-        @logger.debug "REST REQ #{method.to_s.upcase} #{params[:url]} #{params[:headers].inspect} #{params[:cookies].inspect} #{params[:payload]}"
+        to_log = "REST REQ #{method.to_s.upcase} #{params[:url]} #{params[:headers].inspect} #{params[:cookies].inspect} #{params[:payload]}"
+        @logger.debug to_log
+        p to_log
         RestClient::Request.execute params do |response, request, result, &block|
-          @logger.debug "REST RES #{response.code} #{response.headers.inspect} #{response.body}"
+          to_log = "REST RES #{response.code} #{response.headers.inspect} #{response.body}"
+          @logger.debug to_log
+          p to_log
           response.return! request, result, &block
         end
       end
+      p "\n\n"
     end
 
     def session

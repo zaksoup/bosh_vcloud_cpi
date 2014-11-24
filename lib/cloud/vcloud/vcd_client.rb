@@ -224,6 +224,7 @@ module VCloudCloud
               :content_type => '*/*'
           }
       }
+      p "The attempted path is #{params[:url]}"
       params[:headers][:x_vcloud_authorization] = @auth_token if !options[:login] && @auth_token
       params[:cookies] = @cookie if !options[:login] && cookie_available?
       params[:payload] = options[:payload].to_s if options[:payload]

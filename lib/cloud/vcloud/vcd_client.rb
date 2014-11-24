@@ -239,10 +239,10 @@ module VCloudCloud
           to_log = "REST RES #{response.code} #{response.headers.inspect} #{response.body}"
           @logger.debug to_log
           p to_log
+          p "\n\n"
           response.return! request, result, &block
         end
       end
-      p "\n\n"
     end
 
     def session
